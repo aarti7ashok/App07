@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: circleci/python:4-alpine
+      #environment:
+        #  DOCKER_USER: myCR07
+        #  DOCKER_PASS: wDY0qlFaJnaCM/WSYsiXr04fv=3BPdGQ
+
+    steps:
+    - checkout
+    - setup-remote-docker
+    - run:
+        command: |
+         docker build -t mycr07.azurecr.io/web1:1.0 .
+    - run:
+        command: |
+         docker login --username $DOCKER_USER --password $DOCKER_PASS mycr07.azurecr.io
+    - run:
+        command: |
+         docker push mycr07.azurecr.io/web1:1.0
